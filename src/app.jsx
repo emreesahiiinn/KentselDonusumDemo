@@ -393,10 +393,12 @@ const Table = ({ columns, data }) => (
 const EnstituPanel = () => {
   const [activeMenu, setActiveMenu] = useState('dashboard');
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState({ title: '', content: null });
+  const [modalTitle, setModalTitle] = useState('');
+  const [modalContent, setModalContent] = useState(null);
   
   const openModal = (title, content) => {
-    setModalContent({ title, content });
+    setModalTitle(title);
+    setModalContent(content);
     setModalOpen(true);
   };
   
@@ -523,7 +525,7 @@ const EnstituPanel = () => {
               </Tooltip>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 16 }}>
-              <Tooltip text="Son 7 gün içinde gelen müteahhit ve mülk sahibi başvuruları" position="bottom">
+              <Tooltip text="Son 7 gün içinde gelen müteahhit ve mülk sahibi başvuruları" position="bottom" fullWidth>
                 <Card>
                   <h3 style={{ fontSize: 16, margin: '0 0 16px', color: colors.primary }}>Son Başvurular</h3>
                   <Table
@@ -568,7 +570,7 @@ const EnstituPanel = () => {
         return (
           <>
             <Header title="Müteahhit Yönetimi" subtitle="Kayıtlı müteahhitler ve başvurular" />
-            <Tooltip text="Müteahhit başvurularını bu ekrandan inceleyebilir, onaylayabilir veya reddedebilirsiniz" position="bottom">
+            <Tooltip text="Müteahhit başvurularını bu ekrandan inceleyebilir, onaylayabilir veya reddedebilirsiniz" position="bottom" fullWidth>
               <Card>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
                   <Tooltip text="Firma adı veya yetkili kişiye göre arama yapın">
@@ -606,7 +608,7 @@ const EnstituPanel = () => {
         return (
           <>
             <Header title="Mülk Sahibi Yönetimi" subtitle="Kayıtlı mülk sahipleri ve başvurular" />
-            <Tooltip text="Mülk sahiplerinin kayıtlarını, belgelerini ve mülk durumlarını bu ekrandan yönetebilirsiniz" position="bottom">
+            <Tooltip text="Mülk sahiplerinin kayıtlarını, belgelerini ve mülk durumlarını bu ekrandan yönetebilirsiniz" position="bottom" fullWidth>
               <Card>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
                   <Tooltip text="İsim veya konuma göre filtreleme yapın">
@@ -706,7 +708,7 @@ const EnstituPanel = () => {
                   </div>
                 ))}
               </Card>
-              <Tooltip text="Onaylanmış ve planlanmış randevuları görüntüleyin">
+              <Tooltip text="Onaylanmış ve planlanmış randevuları görüntüleyin" fullWidth>
                 <Card>
                   <h3 style={{ fontSize: 16, margin: '0 0 16px', color: colors.primary }}>Onaylanan Randevular</h3>
                   {[
@@ -737,7 +739,7 @@ const EnstituPanel = () => {
         return (
           <>
             <Header title="Şikayet Yönetimi" subtitle="Anlaşma sonrası şikayet ve uyuşmazlıklar" />
-            <Tooltip text="Müteahhit ve mülk sahipleri arasındaki anlaşmazlıkları buradan yönetebilirsiniz">
+            <Tooltip text="Müteahhit ve mülk sahipleri arasındaki anlaşmazlıkları buradan yönetebilirsiniz" fullWidth>
               <Card>
                 <Table
                   columns={[
@@ -813,7 +815,7 @@ const EnstituPanel = () => {
                 <StatCard icon={Icons.doc} label="Sözleşme Bekleyen" value="5" color={colors.secondary} />
               </Tooltip>
             </div>
-            <Tooltip text="Tüm aktif eşleşmeleri ve daire bazlı mutabakat durumlarını görüntüleyin">
+            <Tooltip text="Tüm aktif eşleşmeleri ve daire bazlı mutabakat durumlarını görüntüleyin" fullWidth>
               <Card>
                 <h3 style={{ fontSize: 16, margin: '0 0 16px', color: colors.primary }}>Aktif Eşleşmeler ve Mutabakat Durumları</h3>
                 <Table
@@ -939,7 +941,7 @@ const EnstituPanel = () => {
                 <StatCard icon={Icons.alert} label="Gecikmiş" value="₺150K" color={colors.danger} />
               </Tooltip>
             </div>
-            <Tooltip text="Tüm ödeme hareketlerini görüntüleyin ve makbuz oluşturun">
+            <Tooltip text="Tüm ödeme hareketlerini görüntüleyin ve makbuz oluşturun" fullWidth>
               <Card>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
                   <h3 style={{ fontSize: 16, margin: 0, color: colors.primary }}>Ödeme Hareketleri</h3>
@@ -1097,7 +1099,12 @@ const EnstituPanel = () => {
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: colors.bg }}>
       <Sidebar userType="Enstitü Paneli" activeMenu={activeMenu} setActiveMenu={setActiveMenu} menuItems={menuItems} />
-      <div style={{ flex: 1, padding: 24 }}>{renderContent()}</div>
+      <div style={{ flex: 1, padding: 24 }}>
+        {renderContent()}
+        <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} title={modalTitle}>
+          {modalContent}
+        </Modal>
+      </div>
     </div>
   );
 };
@@ -1146,7 +1153,7 @@ const MuteahhitPanel = () => {
               </Tooltip>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 16 }}>
-              <Tooltip text="Bölgenizde yeni eklenen mülk fırsatları">
+              <Tooltip text="Bölgenizde yeni eklenen mülk fırsatları" fullWidth>
                 <Card>
                   <h3 style={{ fontSize: 16, margin: '0 0 16px', color: colors.primary }}>Yeni Mülk Fırsatları</h3>
                   {[
@@ -1191,7 +1198,7 @@ const MuteahhitPanel = () => {
                   ))}
                 </Card>
               </Tooltip>
-              <Tooltip text="Verdiğiniz tekliflerin mevcut durumları">
+              <Tooltip text="Verdiğiniz tekliflerin mevcut durumları" fullWidth>
                 <Card>
                   <h3 style={{ fontSize: 16, margin: '0 0 16px', color: colors.primary }}>Teklif Durumları</h3>
                   {[
@@ -1381,7 +1388,7 @@ const MuteahhitPanel = () => {
         return (
           <>
             <Header title="Tekliflerim" subtitle="Verdiğiniz tekliflerin durumu" />
-            <Tooltip text="Tüm teklif başvurularınızı buradan takip edebilirsiniz">
+            <Tooltip text="Tüm teklif başvurularınızı buradan takip edebilirsiniz" fullWidth>
               <Card>
                 <Table
                   columns={[
@@ -1638,7 +1645,7 @@ const MuteahhitPanel = () => {
                 <StatCard icon={Icons.calendar} label="Sonraki Ödeme" value="01.02.2026" color={colors.accent} />
               </Tooltip>
             </div>
-            <Tooltip text="Tüm ödeme ve fatura geçmişiniz">
+            <Tooltip text="Tüm ödeme ve fatura geçmişiniz" fullWidth>
               <Card>
                 <h3 style={{ fontSize: 16, margin: '0 0 16px', color: colors.primary }}>Ödeme Geçmişi</h3>
                 <Table
@@ -1754,7 +1761,7 @@ const MulkSahibiPanel = () => {
               </Tooltip>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-              <Tooltip text="Mülkünüz için en son gelen teklifler">
+              <Tooltip text="Mülkünüz için en son gelen teklifler" fullWidth>
                 <Card>
                   <h3 style={{ fontSize: 16, margin: '0 0 16px', color: colors.primary }}>Son Teklifler</h3>
                   {[
@@ -1860,7 +1867,7 @@ const MulkSahibiPanel = () => {
             </div>
             
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 24 }}>
-              <Tooltip text="Mülkünüze ait temel bilgiler">
+              <Tooltip text="Mülkünüze ait temel bilgiler" fullWidth>
                 <Card>
                   <h3 style={{ fontSize: 16, margin: '0 0 16px', color: colors.primary }}>Bina Bilgileri</h3>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
@@ -1903,7 +1910,7 @@ const MulkSahibiPanel = () => {
             </div>
             
             {/* Mutabakat Durumu */}
-            <Tooltip text="Yasal olarak kentsel dönüşüm için daire maliklerinin 2/3 çoğunluğunun onayı gereklidir">
+            <Tooltip text="Yasal olarak kentsel dönüşüm için daire maliklerinin 2/3 çoğunluğunun onayı gereklidir" fullWidth>
               <Card style={{ marginBottom: 24 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
                   <div>
@@ -1960,7 +1967,7 @@ const MulkSahibiPanel = () => {
             </Tooltip>
             
             {/* Daire Listesi Tablo */}
-            <Tooltip text="Tüm daire sahiplerinin detaylı listesi ve iletişim bilgileri">
+            <Tooltip text="Tüm daire sahiplerinin detaylı listesi ve iletişim bilgileri" fullWidth>
               <Card>
                 <h3 style={{ fontSize: 16, margin: '0 0 16px', color: colors.primary }}>Daire Sahipleri Listesi</h3>
                 <Table
@@ -1993,7 +2000,7 @@ const MulkSahibiPanel = () => {
         return (
           <>
             <Header title="Gelen Teklifler" subtitle="Müteahhitlerden gelen teklifler" />
-            <Tooltip text="Teklifleri yan yana karşılaştırarak en uygun seçimi yapın">
+            <Tooltip text="Teklifleri yan yana karşılaştırarak en uygun seçimi yapın" fullWidth>
               <Card style={{ marginBottom: 16 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <p style={{ color: colors.muted, margin: 0 }}>Toplam 4 teklif aldınız</p>
@@ -2091,7 +2098,7 @@ const MulkSahibiPanel = () => {
         return (
           <>
             <Header title="Belgelerim" subtitle="Yüklenen ve onaylanan belgeler" />
-            <Tooltip text="Mülkünüze ait yüklenmiş tüm belgeler ve onay durumları">
+            <Tooltip text="Mülkünüze ait yüklenmiş tüm belgeler ve onay durumları" fullWidth>
               <Card>
                 <Table
                   columns={[
@@ -2275,7 +2282,7 @@ const MulkSahibiPanel = () => {
                 <StatCard icon={Icons.calendar} label="Bekleyen" value="₺3.500" color={colors.accent} />
               </Tooltip>
             </div>
-            <Tooltip text="Tüm ödeme geçmişinizi görüntüleyin">
+            <Tooltip text="Tüm ödeme geçmişinizi görüntüleyin" fullWidth>
               <Card>
                 <h3 style={{ fontSize: 16, margin: '0 0 16px', color: colors.primary }}>Ödeme Geçmişi</h3>
                 <Table
