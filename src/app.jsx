@@ -206,6 +206,7 @@ const Modal = ({ isOpen, onClose, title, children, size = 'md' }) => {
 };
 
 // ===== INFO CARD WITH TOOLTIP =====
+// eslint-disable-next-line no-unused-vars
 const InfoCard = ({ children, tooltip, style }) => (
   <Tooltip text={tooltip} position="top">
     <div style={{
@@ -461,6 +462,7 @@ const EnstituPanel = () => {
   );
 
   // Şikayet Detay Modal İçeriği
+  // eslint-disable-next-line no-unused-vars
   const SikayetDetayModal = ({ sikayet }) => (
     <div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 24 }}>
